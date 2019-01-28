@@ -2,6 +2,7 @@
  * @param {number[]} nums
  * @return {number}
  */
+ // https://leetcode.com/explore/featured/card/top-interview-questions-easy/97/dynamic-programming/576/
 var rob = function(nums, start=0) {
     var indx = 0;
     var length = nums.length
