@@ -1,0 +1,62 @@
+/** https://leetcode.com/problems/unique-paths-ii/
+ * @param {number[][]} obstacleGrid
+ * @return {number}
+ */
+var uniquePathsWithObstacles = function(metrix) {
+    var indx = {}
+      , final_x = metrix.length - 1
+      , final_y = metrix[0].length - 1;
+
+// get possible next location and add any blocker to blocked list
+    function getNext(x, y) {
+        var solution = [];
+        if (metrix[x + 1]) {
+            metrix[x + 1][y] === 0 ? solution.push([x + 1, y]) : (indx[[x + 1, y]] = 0);
+        }
+        metrix[x][y + 1] === 0 ? solution.push([x, y + 1]) : (indx[[x, y + 1]] = 0);
+        return solution;
+    }
+
+    function solve(cor_x, cor_y) {
+        if (metrix[cor_x][cor_y] === 1) {
+            indx[[cor_x, cor_y]] = 0;
+            return 0;
+        } else if (indx[[cor_x, cor_y]] >= 0 ) {
+            return indx[[cor_x, cor_y]];
+        }
+
+        var nxt = getNext(cor_x, cor_y);
+
+        if (nxt.length === 0) {
+            // if reached to end then return 1 else means it blocked further
+            if (cor_x === final_x && cor_y === final_y) {
+                indx[[cor_x, cor_y]] = 1;
+                return 1;
+            } else {
+                indx[[cor_x, cor_y]] = 0;
+                return 0;
+            }
+        }
+
+        var sol = 0;
+
+        while (nxt.length > 0) {
+            var elem = nxt.pop();
+            sol += solve(elem[0], elem[1]);
+        }
+
+        indx[[cor_x, cor_y]] = sol;
+
+        return sol;
+    }
+
+    if (metrix[0][0] === 1)
+        return 0;
+
+    if (metrix[metrix.length - 1][metrix[0].length - 1] === 1)
+        return 0;
+
+    solve(0, 0);
+
+    return indx[[0, 0]];
+};
