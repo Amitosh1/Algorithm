@@ -6,11 +6,8 @@
  */
 
 var ladderLength = function(beginWord, endWord, wordList) {
-    var visited = {}
-      , touched = [];
-
+    var visited = {};
     visited[0] = [beginWord];
-    touched.push(beginWord);
     function isSinglematched(word1, word2) {
         var len = word1.length
           , diff = 0;
@@ -23,28 +20,35 @@ var ladderLength = function(beginWord, endWord, wordList) {
     var done = false;
     var endLevel = 0;
     function solve(level) {
+        var remaining = [];
         !done && wordList.forEach(word=>{
-            touched.indexOf(word) === -1 && visited[level].forEach(elem=>{
-                if (isSinglematched(elem, word)) {
+            var wordMatched = false;
+            word !== beginWord && visited[level].forEach(elem=>{
+                if (!wordMatched && isSinglematched(elem, word)) {
                     visited[level + 1] = visited[level + 1] || [];
                     visited[level + 1].push(word);
                     changes++;
-                    touched.push(word);
                     if (word === endWord) {
                         endLevel = level + 2;
                         done = true;
                     }
+                    wordMatched = true;
                 }
             }
             );
+            if (!wordMatched) {
+                remaining.push(word);
+            }
         }
         );
         if (changes) {
             changes = 0;
+            wordList = remaining;
             solve(level + 1);
         }
 
     }
     solve(0);
+    console.log(visited);
     return endLevel;
 };
