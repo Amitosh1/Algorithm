@@ -1,0 +1,26 @@
+/** https://leetcode.com/problems/house-robber-ii/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var rob = function(nums) {
+    if(nums.length ===1) return nums[0];
+      const robing = (start,end)=>{
+        let tmp = 0
+          , with_curr = 0
+          , without_curr = 0;
+        if (start === end)
+            return nums[start];
+        while (start < end) {
+            tmp = with_curr;
+            with_curr = without_curr + nums[start++];
+            without_curr = Math.max(tmp, without_curr);
+        }
+
+        return Math.max(with_curr, without_curr)
+
+    }
+
+    return Math.max(robing(0, nums.length - 1), robing(1, nums.length));
+
+
+};

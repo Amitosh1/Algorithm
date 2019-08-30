@@ -1,0 +1,22 @@
+/** https://leetcode.com/problems/majority-element/
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function(nums) {
+    var count  = 1;index =1, curr = nums[0],length =nums.length;
+    while(index<length){
+        if(nums[index] === curr){
+            count++;
+        }else if(count ===0){
+            curr = nums[index];
+            count=1;
+        }else{
+            count--;
+        }
+        index++;
+    }
+    return curr;
+
+};
+ 
+// [1,1,2,3,2,1]

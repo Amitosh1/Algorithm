@@ -1,0 +1,24 @@
+/** https://leetcode.com/problems/excel-sheet-column-title/
+ * @param {number} n
+ * @return {string}
+ */
+var convertToTitle = function(n) {
+    let remainder, solution = [];
+    while (n > 0) {
+        remainder = n % 26;
+        if (remainder) {
+            solution.push(String.fromCharCode(remainder + 64));
+            n = n / 26 | 0
+        } else {
+            solution.push('Z');
+            n = (n / 26 | 0)-1;
+            if (n>1 && n <= 26) {
+                solution.push(String.fromCharCode(n + 64));
+                n = 0;
+            }
+        }
+    }
+
+    return solution.reverse().join("");
+
+};

@@ -1,0 +1,20 @@
+//https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+
+/**
+ * @param {number[]} numbers
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(numbers, target) {
+    let iterator = 0, final_count = numbers.length, probable = [], curr;
+    while (iterator < final_count) {
+        curr = numbers[iterator]
+        if (probable.indexOf(curr) >= 0) {
+            return [probable.indexOf(curr) + 1, iterator + 1];
+        }
+        if (curr && curr > target)
+            return null;
+        probable.push(target - curr);
+        iterator++;
+    }
+};

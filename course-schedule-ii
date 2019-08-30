@@ -1,0 +1,36 @@
+/** https://leetcode.com/problems/course-schedule-ii/
+ * @param {number} numCourses
+ * @param {number[][]} prerequisites
+ * @return {number[]}
+ */
+var findOrder = function(numCourses, prerequisites) {
+    let course_dependencyMap = {};
+    let actual = numCourses;
+    let solved = false, filtered, curr_key;
+    const order_courses =[];
+    while (--numCourses >= 0) {
+        course_dependencyMap[numCourses] = [];
+    }
+
+    prerequisites.forEach(prerequisity=>course_dependencyMap[prerequisity[0]].push(prerequisity[1]));
+
+    while (true) {
+        filtered = [];
+        Object.entries(course_dependencyMap).forEach(([key,values])=>{
+          if(values.length === 0){
+              actual--;
+              delete course_dependencyMap[key];
+              order_courses.push(key);
+              filtered.push(Number(key));
+          }});
+        if (filtered.length === 0) {
+            break;
+        } else if (!actual) {
+            solved = true;
+            break;
+        };
+
+        Object.entries(course_dependencyMap).forEach(([key,values])=>course_dependencyMap[key] = course_dependencyMap[key].filter(val=>filtered.indexOf(val) === -1));
+    }
+    ;return solved? order_courses:[];
+};

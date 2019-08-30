@@ -1,0 +1,37 @@
+/** https://leetcode.com/problems/number-of-islands/
+ * @param {character[][]} grid
+ * @return {number}
+ */
+var numIslands = function(grid) {
+
+    const processElem = (loc_x,loc_y)=>{
+        grid[loc_x][loc_y] = "0";
+        if (grid[loc_x - 1] && grid[loc_x - 1][loc_y] === "1")
+            processElem(loc_x - 1, loc_y);
+        if (grid[loc_x + 1] && grid[loc_x + 1][loc_y] === "1")
+            processElem(loc_x + 1, loc_y);
+        if (grid[loc_x][loc_y - 1] && grid[loc_x][loc_y - 1] === "1")
+            processElem(loc_x, loc_y - 1);
+        if (grid[loc_x][loc_y + 1] && grid[loc_x][loc_y + 1] === "1")
+            processElem(loc_x, loc_y + 1);
+
+    }
+    var result = 0
+      , i = 0
+      , j = 0;
+    while (grid[i]) {
+        while (grid[i][j]) {
+            if (grid[i][j] === "1") {
+                result++;
+                processElem(i, j);
+            }
+            j++;
+
+        }
+        // reseting counter for next row iteration
+        j = 0;
+        i++;
+    }
+
+    return result;
+};

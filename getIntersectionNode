@@ -1,0 +1,44 @@
+/** https://leetcode.com/problems/intersection-of-two-linked-lists/
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+    let result=null, prevA = "undefined", prevB ="undefined";
+    if (headA === headB)
+        return headA;
+    while (true) {
+        if (headA) {
+            if (headA.prev) {
+                result = headA;
+                break;
+            }
+            headA.prev = prevA;
+            prevA = headA;
+            headA = headA.next;
+        }
+        if (headB) {
+            if (headB.prev) {
+                result = headB;
+                break;
+            }
+            headB.prev = prevB;
+            prevb = headB;
+            headB = headB.next;
+        }
+        if(!headA && !headB){
+            break;
+        }
+
+    }
+    return result;
+
+};
